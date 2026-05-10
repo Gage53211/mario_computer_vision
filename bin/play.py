@@ -110,7 +110,6 @@ if __name__ == "__main__":
                 mario_coords, mario_shape           = detect.find_single_item    (image=screenshot_grey, name="mario")
                 small_gap_coords, small_gap_shape   = detect.find_single_item    (image=screenshot_grey, name="small_ground_gap")
                 gap_coords, gap_shape               = detect.find_single_item    (image=screenshot_grey, name="ground_gap")
-                hill_gap_coords, hill_gap_shape     = detect.find_single_item    (image=screenshot_grey, name="hill_gap")
                 flag_coords, flag_shape             = detect.find_single_item    (image=screenshot_grey, name="flag")
 
                 pipes,  pipe_shape                  = detect.find_multiple_items (image=screenshot_grey, name="pipe")
