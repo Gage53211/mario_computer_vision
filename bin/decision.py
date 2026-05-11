@@ -10,8 +10,22 @@ class Decision:
     PIPE_DISTANCE_THREASH = 64
     SMALL_GAP_DISTANCE_THREASH = 54
     GAP_DISTANCE_THREASH = 64
+
+    GOOMBA_JUMP_TIME = 1.5
+    KOOPA_JUMP_TIME = 1.0
+    PIPE_JUMP_TIME = 1.0
+    FLAG_JUMP_TIME = 1.0
+    SMALL_GAP_JUMP_TIME = 0.6
+    GAP_JUMP_TIME = 0.6
+    BLOCK_JUMP_TIME = .28
+    BLOCK_JUMP_TIME_EXTENDED = 2
+    APPROACHING_HILL_TIME = 1.6
     
-    jump_count = 0
+
+    def __init__(self):
+         self.jump_count = 0
+         self.approaching_hill = True
+
 
     # takes the coordinates and makes a decision to press the "a" button or not
     def make_decision (self, mario, goombas, pipes, small_ground_gap, ground_gap, koopas, blocks, flag):
@@ -21,12 +35,12 @@ class Decision:
         """
 
         if mario:
-            if len(goombas) != 0:
+            if len(goombas) != 0 and len(blocks) == 0:
                 distance = abs(goombas[0][0] - mario[0])
                 if distance <= self.GOOMBA_DISTANCE_THREASH: 
                     print("Goomba Distance From Mario: ", distance)
                     self.keyboard.press('s')
-                    time.sleep(1)
+                    time.sleep(self.GOOMBA_JUMP_TIME)
                     self.keyboard.release('s')
 
             if len(koopas) != 0:
@@ -34,7 +48,7 @@ class Decision:
                 if distance <= self.GOOMBA_DISTANCE_THREASH: 
                     print("Koopa Distance From Mario: ", distance)
                     self.keyboard.press('s')
-                    time.sleep(1)
+                    time.sleep(self.KOOPA_JUMP_TIME)
                     self.keyboard.release('s')
 
             if len(pipes) != 0:
@@ -42,7 +56,7 @@ class Decision:
                 if distance <= self.PIPE_DISTANCE_THREASH:
                     print("Pipe Distance From Mario: ", distance) 
                     self.keyboard.press('s')
-                    time.sleep(1)
+                    time.sleep(self.PIPE_JUMP_TIME)
                     self.keyboard.release('s')
 
             if flag != None:
@@ -50,20 +64,24 @@ class Decision:
                 if distance <= self.PIPE_DISTANCE_THREASH:
                     print("Flag Distance From Mario: ", distance) 
                     self.keyboard.press('s')
-                    time.sleep(1)
+                    time.sleep(self.FLAG_JUMP_TIME)
                     self.keyboard.release('s')
                 return True
             
             if len(blocks) != 0:
-                self.jump_count = self.jump_count + 1
+                if self.approaching_hill:
+                    time.sleep(self.APPROACHING_HILL_TIME)
+                    self.approaching_hill = False
+                    print ("Approaching Hill")
                 if self.jump_count < 5: 
                     self.keyboard.press('s')
-                    time.sleep(.25)
+                    time.sleep(self.BLOCK_JUMP_TIME)
                     self.keyboard.release('s')
+                    self.jump_count = self.jump_count + 1
                 else:
                     self.jump_count = 0
                     self.keyboard.press('s')
-                    time.sleep(2)
+                    time.sleep(self.BLOCK_JUMP_TIME_EXTENDED)
                     self.keyboard.release('s')
 
             if small_ground_gap != None and len(blocks) == 0:
@@ -71,7 +89,7 @@ class Decision:
                 if distance <= self.SMALL_GAP_DISTANCE_THREASH:
                     print("Small Gap Distance From Mario: ", distance) 
                     self.keyboard.press('s')
-                    time.sleep(.6)
+                    time.sleep(self.SMALL_GAP_JUMP_TIME)
                     self.keyboard.release('s')
 
             if ground_gap != None:
@@ -79,6 +97,8 @@ class Decision:
                 if distance <= self.GAP_DISTANCE_THREASH:
                     print("Gap Distance From Mario: ", distance) 
                     self.keyboard.press('s')
-                    time.sleep(.6)
+                    time.sleep(self.GAP_JUMP_TIME)
                     self.keyboard.release('s')
 
+
+       
