@@ -8,6 +8,7 @@ class Decision:
     GOOMBA_DISTANCE_THREASH = 64
     KOOPA_DISTANCE_THREASH = 64
     PIPE_DISTANCE_THREASH = 64
+    FLAG_DISTANCE_THREASH = 64
     SMALL_GAP_DISTANCE_THREASH = 54
     GAP_DISTANCE_THREASH = 64
 
@@ -17,9 +18,12 @@ class Decision:
     FLAG_JUMP_TIME = 1.0
     SMALL_GAP_JUMP_TIME = 0.6
     GAP_JUMP_TIME = 0.6
-    BLOCK_JUMP_TIME = .28
+    
+    BLOCK_JUMP_TIME = .027
+    ON_BLOCK_WAIT_TIME = .320
     BLOCK_JUMP_TIME_EXTENDED = 2
     APPROACHING_HILL_TIME = 1.6
+    HILL_JUMP_COUNT = 4
     
 
     def __init__(self):
@@ -61,7 +65,7 @@ class Decision:
 
             if flag != None:
                 distance = abs(flag[0] - mario[0])
-                if distance <= self.PIPE_DISTANCE_THREASH:
+                if distance <= self.FLAG_DISTANCE_THREASH:
                     print("Flag Distance From Mario: ", distance) 
                     self.keyboard.press('s')
                     time.sleep(self.FLAG_JUMP_TIME)
@@ -73,12 +77,15 @@ class Decision:
                     time.sleep(self.APPROACHING_HILL_TIME)
                     self.approaching_hill = False
                     print ("Approaching Hill")
-                if self.jump_count < 5: 
+                if self.jump_count < self.HILL_JUMP_COUNT: 
                     self.keyboard.press('s')
                     time.sleep(self.BLOCK_JUMP_TIME)
                     self.keyboard.release('s')
+                    time.sleep(self.ON_BLOCK_WAIT_TIME)
                     self.jump_count = self.jump_count + 1
+                    print("Hill Jump: ", self.jump_count)
                 else:
+                    print("big jump?")
                     self.jump_count = 0
                     self.keyboard.press('s')
                     time.sleep(self.BLOCK_JUMP_TIME_EXTENDED)
