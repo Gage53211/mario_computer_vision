@@ -1,11 +1,11 @@
 import mss
 import time
 import pygame
+import pywinctl as gwindow
 import detect
 from decision import Decision
 import cv2 as cv
 import numpy as np
-import pygetwindow as gwindow
 from pynput.keyboard import Key, Controller
 
 
