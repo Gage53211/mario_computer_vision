@@ -1,6 +1,7 @@
 import mss
 import time
 import pygame
+import platform
 import pywinctl as gwindow
 import detect
 from decision import Decision
@@ -33,7 +34,12 @@ class Play ():
         self.keyboard = Controller()
         self.clock = pygame.time.Clock()
         self.dec = Decision()
-        
+
+        print("PLEASE READ MAC SECTION OF README \n")
+
+        if platform.system != "Darwin":
+            print("This is the mac verion of this program, please swap branches and try again",)
+            exit()
         try:
             self.window = gwindow.getWindowsWithTitle('Mesen - Super Mario Bros')[0]
             print("Mesen Emulator Running Super Mario Found,", 
@@ -47,25 +53,34 @@ class Play ():
             if not self.window.isMaximized: # brings window into view
                 self.window.restore()
             self.window.activate() # focuses the window for pynput
-            time.sleep(.5) # wait for application to show up on screen
+            time.sleep(1) # wait for application to show up on screen
 
             # have the emulator display at 2x resolution
-            with self.keyboard.pressed(Key.alt):
-                self.keyboard.press('2')
-                time.sleep(.1)
-                self.keyboard.release('2')
-                time.sleep(.5)
+            self.keyboard.press('4')
+            time.sleep(.1)
+            self.keyboard.release('4')
+            time.sleep(.5)
 
-            self.size = {
-                "top": self.window.top, "left": self.window.left, "width": self.window.width, "height": self.window.height
-            }
+            # find which scale produces 512x480 resolution
+            for s in range (1, 9):
+                print("Setting Mesen resolution scale to ",s)
+                self.keyboard.press(f'{s}')
+                time.sleep(.1)
+                self.keyboard.release(f'{s}')
+                time.sleep(.5)
+                self.size = {
+                    "top": self.window.top, "left": self.window.left, "width": self.window.width, "height": self.window.height
+                }
+                print(self.size["height"], " : ", self.size["width"]) 
+                if (self.size["height"] > 500 and self.size["height"] < 600) and (self.size["width"] > 450 and self.size["width"] < 540) :  
+                    print(s,"produces proper resolution.")
+                    break
             
             # have the emulator reset the game
-            with self.keyboard.pressed(Key.ctrl):
-                self.keyboard.press('r')
-                time.sleep(.1)
-                self.keyboard.release('r')
-                time.sleep(1.5)
+            self.keyboard.press('r')
+            time.sleep(.1)
+            self.keyboard.release('r')
+            time.sleep(1.5)
 
             # input start key
             self.keyboard.press('w')
@@ -89,9 +104,6 @@ class Play ():
                 screenshot = np.array(sct.grab(self.size))
                 screenshot_grey = cv.cvtColor(screenshot, cv.COLOR_BGRA2GRAY)
 
-                self.size = {
-                    "top": self.window.top, "left": self.window.left, "width": self.window.width, "height": self.window.height
-                }
 
                 # crop when conditions are correct
                 if self.new_height is None:
