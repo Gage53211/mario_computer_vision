@@ -49,17 +49,22 @@ class Play ():
             self.window.activate() # focuses the window for pynput
             time.sleep(.5) # wait for application to show up on screen
 
-            # have the emulator display at 2x resolution
-            with self.keyboard.pressed(Key.alt):
-                self.keyboard.press('2')
-                time.sleep(.1)
-                self.keyboard.release('2')
-                time.sleep(.5)
-
-            self.size = {
-                "top": self.window.top, "left": self.window.left, "width": self.window.width, "height": self.window.height
-            }
-            
+            # find which scale produces 512x480 resolution
+            for s in range (1, 9):
+                print("Setting Mesen resolution scale to ",s)
+                with self.keyboard.pressed(Key.alt):
+                    self.keyboard.press(f'{s}')
+                    time.sleep(.1)
+                    self.keyboard.release(f'{s}')
+                    time.sleep(.5)
+                self.size = {
+                    "top": self.window.top, "left": self.window.left, "width": self.window.width, "height": self.window.height
+                }
+                print(self.size["height"], " : ", self.size["width"]) 
+                if (self.size["height"] > 500 and self.size["height"] < 600) and (self.size["width"] > 450 and self.size["width"] < 540) :  
+                    print(s,"produces proper resolution.")
+                    break
+                    
             # have the emulator reset the game
             with self.keyboard.pressed(Key.ctrl):
                 self.keyboard.press('r')
@@ -88,10 +93,6 @@ class Play ():
             while not self.is_finished: 
                 screenshot = np.array(sct.grab(self.size))
                 screenshot_grey = cv.cvtColor(screenshot, cv.COLOR_BGRA2GRAY)
-
-                self.size = {
-                    "top": self.window.top, "left": self.window.left, "width": self.window.width, "height": self.window.height
-                }
 
                 # crop when conditions are correct
                 if self.new_height is None:
