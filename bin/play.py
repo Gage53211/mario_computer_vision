@@ -37,9 +37,6 @@ class Play ():
 
         print("PLEASE READ MAC SECTION OF README \n")
 
-        if platform.system != "Darwin":
-            print("This is the mac verion of this program, please swap branches and try again",)
-            exit()
         try:
             self.window = gwindow.getWindowsWithTitle('Mesen - Super Mario Bros')[0]
             print("Mesen Emulator Running Super Mario Found,", 
@@ -103,7 +100,6 @@ class Play ():
             while not self.is_finished: 
                 screenshot = np.array(sct.grab(self.size))
                 screenshot_grey = cv.cvtColor(screenshot, cv.COLOR_BGRA2GRAY)
-
 
                 # crop when conditions are correct
                 if self.new_height is None:
