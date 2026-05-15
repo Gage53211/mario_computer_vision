@@ -34,8 +34,7 @@ Next, you must name your super mario .nes file "Super Mario Bros" so that the em
 
 Then run the emulator. If the emulator is being run for the first time, select only the arrow keys as the control scheme.
 
-    insert image
-
+<img width="392" height="506" alt="first_time_run_mesen_img" src="https://github.com/user-attachments/assets/cde25935-1f43-4c70-b451-d541db3192f0" />
 
 Then click on the "File" option at the top of the toolbar and click "Open". Once your file explorer opens, find your "Super Mario Bros.nes" file and double click it to start the game.
 
@@ -81,7 +80,7 @@ Once brew is installed, run the following command to install "SDL2"...
 
 When that finishes installing, run the emulator. If the emulator is being run for the first time, select only the arrow keys as the control scheme.
 
-    insert image
+<img width="392" height="506" alt="first_time_run_mesen_img" src="https://github.com/user-attachments/assets/cde25935-1f43-4c70-b451-d541db3192f0" />
 
 
 Due to technical reasons and time constraints you will need to go to "Settings" in the tool bar and then "preferances" at the bottom of the list and then "Shortcut Keys" to change some of the keybinds. below is a list of keybinds that need to be changed.
