@@ -17,7 +17,11 @@ You must also source your own super mario bros (non PAL) rom.
 
 ## Running This Program (Windows)
 
-First, make sure that you are on the windows branch (main). Then install the dependencies for the code using the commands below.
+First, make sure that you are on the windows branch (main). You can swap to it by using...
+
+	git checkout main
+
+Then install the dependencies for the code using the commands below.
     
     #in ..\<Root Of Repo> 
     
@@ -56,7 +60,11 @@ Once the code is running, don't touch your mouse or the keyboard and watch as th
 
 ## Running This Program (Mac)
 
-First, make sure that you are on the windows branch (main). Then install the dependencies for the code using the commands below.
+First, make sure that you are on the mac branch (main-mac). You can swap to it by using...
+
+	git checkout main-mac
+
+Then install the dependencies for the code using the commands below.
     
     #in ..\<Root Of Repo> 
     
