@@ -12,6 +12,8 @@ https://www.mesen.ca/
 
 You must also have Python and Pip installed.
 
+You must also source your own super mario bros (non PAL) rom.
+
 
 ## Running This Program (Windows)
 
